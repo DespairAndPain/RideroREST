@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ridApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Rideo</title>
+	
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="js/controller.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+<body>
+	
+	<div class="container" ng-controller="ridCtrl">
+	{{items[0].name}}
+	<br>
+	{{items[0].sku}}
+	<br>
+		<div ng-repeat="item in items">
+			{{item.name}} {{item.sku}}
+		</div>
+	</div>
+	<form method="post" action="/fileupload" enctype="multipart/form-data">
+        <input type="file" id="file" name="file">
+        <input type="submit" value="submit">
+    </form>
+	
+</body>
+</html>
