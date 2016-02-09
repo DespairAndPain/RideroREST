@@ -20,6 +20,8 @@ app.use(express.static(__dirname + '/public'));
 app.post('/fileupload', function (req, res) {
 	var form = new formidable.IncomingForm();
 	form.keepExtensions = true;
+
+
 	form.parse(req, function(err, fields, files) {
 		if (!err) {
 			console.log('File uploaded : ' + files.file.path);
@@ -31,7 +33,9 @@ app.post('/fileupload', function (req, res) {
 					filename: files.file.name,
 					aliases: 'sadsdasdasdsadsad'
 				});
-
+				res.redirect('/?id='+writestream._store.fileId);
+				console.log(writestream._store.fileId);
+				//res.json({userId : writestream._store.fileId});
 				fs.createReadStream(files.file.path).pipe(writestream);
 
 			});
@@ -39,18 +43,20 @@ app.post('/fileupload', function (req, res) {
 	});
 
 	form.on('end', function() {        
-		res.send('Completed');
+		//res.send('Completed');
 	});
-
+	
 });
+
 
 app.get('/get/:id', function (req, res) {
 	var conn = mongoose.createConnection('mongodb://localhost/ridero');
-	var id = req.params.id
+	var id = req.params.id+"";
 	console.log(id);
+	//56b8e5363a8a20d63ddcf5ec
 	conn.once('open', function () {
 		var gfs = grid(conn.db);
-		gfs.createReadStream({_id: ObjectId("56b8e5363a8a20d63ddcf5ec")}).pipe(res);
+		gfs.createReadStream({_id: ObjectId(id)}).pipe(res);
 	});
 });
 

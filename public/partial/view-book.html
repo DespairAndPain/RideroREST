@@ -1,0 +1,14 @@
+<div class="container" ng-controller="ridCtrl">
+	{{items[0].name}}
+	<br>
+	{{items[0].sku}}
+	<br>
+	<div ng-repeat="item in items">
+		{{item.name}} {{item.sku}}
+	</div>
+</div>
+
+<form method="post" action="/fileupload" enctype="multipart/form-data">
+    <input type="file" id="file" name="file">
+    <input type="submit" value="submit">
+</form>
