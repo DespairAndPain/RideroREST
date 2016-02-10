@@ -5,27 +5,86 @@
 	<title>Rideo</title>
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="bower_components/angular/angular.min.js"></script>
-	<script src="js/controller.js"></script>
-	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="bower_components/angular-route/angular-route.min.js"></script>
-	
+	<script src="js/controller.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-	
-	<div class="container" ng-controller="ridCtrl">
-	{{items[0].name}}
-	<br>
-	{{items[0].sku}}
-	<br>
-		<div ng-repeat="item in items">
-			{{item.name}} {{item.sku}}
+
+
+<div class="container" ng-controller="ridCtrl">
+
+	<div class="modal fade bd-example-modal-lg" id="Modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="gridModalLabel">Добавить книгу</h4>
+				</div>
+				<div class="modal-body">
+						<h4>Отлично, книгу ты загрузил. Осталось указать название книги и автора</h4>
+					<input type="text" class="form-control" placeholder="Название книги" aria-describedby="sizing-addon1" ng-model="name">
+					<input type="text" class="form-control" placeholder="Автор книги" aria-describedby="sizing-addon1" ng-model="author">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" ng-click="add()" data-dismiss="modal">Save changes</button>
+				</div>
+			</div>
 		</div>
 	</div>
-	<form method="post" action="/fileupload" enctype="multipart/form-data">
-        <input type="file" id="file" name="file">
-        <input type="submit" value="submit">
-    </form>
+
 	
+	<div class="container">
+		<div class="page-header">
+			<h1>Список книг <a class="btn btn-primary" href ="/"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Обновить </a> </h1>
+		</div>
+	</div>
+	<div class="container">
+		<br>
+		
+		
+		<div ng-repeat="item in items" class = "jumbotron">	
+			
+			<h1>{{item.author}}</h1>
+			<h2>{{item.title}}</h2>
+			<a href="/get/{{item.file}}" class="btn btn-default">Посмотреть книгу</a>
+			<input type="button" value="Удалить" ng-click="delete(item.file, item._id)">
+
+		</div>
+	</div>
+
+</div>
+
+
+	<!--<input type="button" value="Send" ng-click="send()">-->
+	
+
+</div>
+<footer class="footer">
+<div class="row">
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4">
+		<div class="container mid">
+			<h3 >Хочешь добавить свою книгу? </h3><h3>Знаю что шочешь!</h3>
+			<form method="post" action="/fileupload" enctype="multipart/form-data" >
+				<span class="btn btn-default btn-file">
+					Жми и выбирай какую именно <input type="file" id="file" name="file">
+				</span>
+				<input class = "btn btn-primary" type="submit" value="Загрузить">
+			</form>
+		</div>
+	</div>
+	<div class="col-sm-4"></div>
+</div>
+	
+</footer>
+
+
+
 </body>
 </html>
