@@ -32,7 +32,7 @@ var refreshviwe = function() {
   });
 };
 
-refresh();
+refreshviwe();
 
 }]);
 

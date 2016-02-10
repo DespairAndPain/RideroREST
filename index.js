@@ -31,7 +31,6 @@ app.post('/fileupload', function (req, res) {
 				var gfs = grid(conn.db);
 				var writestream = gfs.createWriteStream({
 					filename: files.file.name,
-					aliases: 'sadsdasdasdsadsad'
 				});
 				res.redirect('/?id='+writestream._store.fileId);
 				console.log(writestream._store.fileId);
