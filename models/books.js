@@ -2,6 +2,7 @@
 // Dependencies
 var restful = require('node-restful');
 var mongoose = restful.mongoose;
+var mongooose = require('mongoose');
 
 // Schema
 var bookSchema = new mongoose.Schema({

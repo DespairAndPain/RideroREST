@@ -35,7 +35,6 @@ app.post('/fileupload', function (req, res) {
 				});
 				res.redirect('/?id='+writestream._store.fileId);
 				console.log(writestream._store.fileId);
-				//res.json({userId : writestream._store.fileId});
 				fs.createReadStream(files.file.path).pipe(writestream);
 
 			});
@@ -43,7 +42,7 @@ app.post('/fileupload', function (req, res) {
 	});
 
 	form.on('end', function() {        
-		//res.send('Completed');
+		//res.send('Найс');
 	});
 	
 });
@@ -52,34 +51,34 @@ app.delete('/delete/book/:id', function(req, res) {
 	var id = req.params.id+"";
 	var conn = mongoose.createConnection('mongodb://localhost/ridero');
 	console.log('hey');
-	// This should be your files metadata collection, fs.files is the default collection for it.
+
+//	var Books = r;
+
+//	Books.findOne({ _id : ObjectId(id) }, function (err, obj) {
+//	    if (err) return cb(err); // don't forget to handle error/
+//	    var gfs = grid(conn.db);
+//	    gfs.remove(obj, function(err){
+//	      if (err) return false;
+//	      console.log('success');
+//	      return true;          
+//	    })
+//	});
 
 
-	var collection = ObjectId.collection('fs.files');     
+
+
 	conn.once('open', function () {
-	collection.findOne({ _id : ObjectId(id) }, function (err, obj) {
-	    if (err) return cb(err); // don't forget to handle error/
-	    var gfs = grid(conn.db);
-	    gfs.remove(obj, function(err){
-	      if (err) return false;
-	      console.log('success');
-	      return true;          
-	    })
-	});
+		var gfs = grid(conn.db);
 
-//	conn.once('open', function () {
-//		var gfs = grid(conn.db);
-//
-	//	gfs.remove({_id: ObjectId(id)}, function (err) {
-	//	  if (err) return console.log(err);
-	//	  console.log('success');
-	//	});
+		gfs.remove({_id: ObjectId(id)}, function (err) {
+		  if (err) return console.log(err);
+		  console.log('success');
+		});
 
 
 	});
 
 });
-
 
 app.get('/get/:id', function (req, res) {
 	var conn = mongoose.createConnection('mongodb://localhost/ridero');
@@ -105,3 +104,5 @@ app.use('/api', require('./routes/api'));
 // Start server
 app.listen(3000);
 console.log('API is running on port 3000');
+
+//Готов работать за еду
