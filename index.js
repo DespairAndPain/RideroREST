@@ -6,6 +6,7 @@ var formidable = require('formidable');
 var grid = require('gridfs-stream');
 var fs = require('fs');
 var util = require('util');
+var db = require('mongodb')
 var ObjectId = require('mongodb').ObjectId; 
 
 // MongoDB
@@ -48,16 +49,55 @@ app.post('/fileupload', function (req, res) {
 	
 });
 
+app.delete('/delete/book/:id', function(req, res) {
+	var id = req.params.id+"";
+	var conn = mongoose.createConnection('mongodb://localhost/ridero');
+	console.log('hey');
+	// This should be your files metadata collection, fs.files is the default collection for it.
+
+
+	var collection = ObjectId.collection('fs.files');     
+	conn.once('open', function () {
+	collection.findOne({ _id : ObjectId(id) }, function (err, obj) {
+	    if (err) return cb(err); // don't forget to handle error/
+	    var gfs = grid(conn.db);
+	    gfs.remove(obj, function(err){
+	      if (err) return false;
+	      console.log('success');
+	      return true;          
+	    })
+	});
+
+//	conn.once('open', function () {
+//		var gfs = grid(conn.db);
+//
+	//	gfs.remove({_id: ObjectId(id)}, function (err) {
+	//	  if (err) return console.log(err);
+	//	  console.log('success');
+	//	});
+
+
+	});
+
+});
+
 
 app.get('/get/:id', function (req, res) {
 	var conn = mongoose.createConnection('mongodb://localhost/ridero');
 	var id = req.params.id+"";
 	console.log(id);
+	try {
+		conn.once('open', function () {
+			var gfs = grid(conn.db);
+			var gfs = gfs.createReadStream({_id: ObjectId(id)}).pipe(res);
+		});
+	} catch (err) {
+
+		console.log(err);	
+
+	}
 	//56b8e5363a8a20d63ddcf5ec
-	conn.once('open', function () {
-		var gfs = grid(conn.db);
-		gfs.createReadStream({_id: ObjectId(id)}).pipe(res);
-	});
+	
 });
 
 // Routes

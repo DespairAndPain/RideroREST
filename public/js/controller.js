@@ -1,8 +1,6 @@
 var app = angular.module('ridApp', []);
 
-app.controller('ridCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
-    console.log("controller is work");
-    var searchObject = $location.search();
+app.controller('ridCtrl', ['$scope', '$http', function($scope, $http) {
 	
 
 	var getUrlParameter = function getUrlParameter(sParam) {
@@ -21,18 +19,50 @@ app.controller('ridCtrl', ['$scope', '$http', '$location', function($scope, $htt
 	};
  	
  	var id = getUrlParameter('id');
-    
+    console.log(id+'  '+ (id != null));
+ 	if (id != null) {
+ 		$('#Modal').modal('show');
+ 	};
 
 var refreshviwe = function() {
-  $http.get('/api/products').success(function(response) {
+  $http.get('/api/books').success(function(response) {
     console.log("Got request");
     $scope.items = response;
 
     console.log(response);
+    console.log(response[0]._id);
   });
 };
 
-refresh();
+
+$scope.add = function(){
+	console.log($scope.author);
+	console.log($scope.name);
+
+	$http({
+        url: '/api/books',
+        method: "POST",
+        data: { 'author' : $scope.author,
+        		'title' : $scope.name,
+        		'file' : id }
+    })
+    .then(function(response) {
+      console.log('send');      
+    });
+
+    refreshviwe();
+}
+
+$scope.delete = function(file, id){
+	console.log(file);
+	console.log(id);
+
+    $http.delete('/api/books/' + id);
+    
+    refreshviwe();
+}
+
+refreshviwe();
 
 }]);
 
