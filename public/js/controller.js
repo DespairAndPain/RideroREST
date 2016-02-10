@@ -2,7 +2,7 @@ var app = angular.module('ridApp', []);
 
 app.controller('ridCtrl', ['$scope', '$http', function($scope, $http) {
 	
-
+    // Параметры из урла
 	var getUrlParameter = function getUrlParameter(sParam) {
 	    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
 	        sURLVariables = sPageURL.split('&'),
@@ -18,23 +18,25 @@ app.controller('ridCtrl', ['$scope', '$http', function($scope, $http) {
 	    }
 	};
  	
+
  	var id = getUrlParameter('id');
     console.log(id+'  '+ (id != null));
+    // Если есть параметры то открывать модал
  	if (id != null) {
  		$('#Modal').modal('show');
  	};
 
+// Обновление отобраажениея (Гет по всем книгам)
 var refreshviwe = function() {
   $http.get('/api/books').success(function(response) {
     console.log("Got request");
     $scope.items = response;
 
     console.log(response);
-    console.log(response[0]._id);
   });
 };
 
-
+// Добавить в коллекцию books записи
 $scope.add = function(){
 	console.log($scope.author);
 	console.log($scope.name);
@@ -53,12 +55,15 @@ $scope.add = function(){
     refreshviwe();
 }
 
+//Удалить записи
 $scope.delete = function(file, id){
 	console.log(file);
 	console.log(id);
-
-    $http.delete('/api/books/' + id);
     
+    // Удаление из коллекции books
+    $http.delete('/api/books/' + id);
+    // Удаление файла привязанного к колекции
+    $http.delete('/delete/book/' + id);
     refreshviwe();
 }
 

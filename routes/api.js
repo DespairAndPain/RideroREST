@@ -1,14 +1,14 @@
-// Dependencies
+// Зависимости
 var express = require('express');
 var router = express.Router();
 
-// Models
+// модель
 var Books = require('../models/books');
 
-// Routes
+// API для редактирования
 Books.methods(['get', 'put', 'post', 'delete']);
 Books.register(router, '/books');
 
-// Return router
+// возвращаем роутинг
 module.exports = router;
 

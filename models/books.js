@@ -1,15 +1,15 @@
 
-// Dependencies
+// Зависимости
 var restful = require('node-restful');
 var mongoose = restful.mongoose;
 var mongooose = require('mongoose');
 
-// Schema
+// Схема
 var bookSchema = new mongoose.Schema({
     author: String,
     title: String,
     file: String
 });
 
-// Return model
+// возвращаем модель
 module.exports = restful.model('Books', bookSchema);

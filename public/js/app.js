@@ -1,3 +1,5 @@
+//ngRoute выдаёт ошибку, хотя модули есть. Доработать
+
  'use strict';
  
 var bookApp = angular.module('bookApp', [
